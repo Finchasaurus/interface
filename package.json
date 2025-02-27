@@ -1,14 +1,23 @@
 {
 	"name": "interface",
 	"version": "1.0.0",
-	"description": "",
+	"description": "I'm bored and want to make UI but not tie it to a game ",
 	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Finchasaurus/interface.git"
+	},
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	],
 	"scripts": {
 		"build": "rbxtsc",
 		"watch": "rbxtsc -w"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Finchasaurus",
 	"license": "ISC",
 	"devDependencies": {
 		"@rbxts/compiler-types": "^3.0.0-types.0",
