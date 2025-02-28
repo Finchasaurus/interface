@@ -1,14 +1,16 @@
 import { joinAnyBindings, useCamera, useEventListener, useViewport } from "@rbxts/pretty-react-hooks";
-import React, { PropsWithChildren, useBinding } from "@rbxts/react";
+import React, { ReactNode, useBinding } from "@rbxts/react";
+import { Empty } from "components/primitive/empty";
 
-interface CardProps {}
+interface CardProps {
+	frontFace?: ReactNode;
+	backFace?: ReactNode;
+}
 
 const OFFSET = 3;
 const PART_SIZE = new Vector3(2.5, 3.5, 0.1);
-const DAMPING = 0.95;
-const SENSITIVITY = 0.5;
 
-export function Card(props: PropsWithChildren<CardProps>) {
+export function CardDisplay(props: CardProps) {
 	const viewport = useViewport();
 	const camera = useCamera();
 	const [cameraCFrame, setCameraCFrame] = useBinding(camera.CFrame);
@@ -45,9 +47,10 @@ export function Card(props: PropsWithChildren<CardProps>) {
 				}}
 			/>
 			<surfacegui MaxDistance={1000} Face={"Back"}>
-				<frame Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={0} ClipsDescendants>
-					{props["children"]}
-				</frame>
+				<Empty>{props.frontFace}</Empty>
+			</surfacegui>
+			<surfacegui MaxDistance={1000} Face={"Front"}>
+				<Empty>{props.backFace}</Empty>
 			</surfacegui>
 		</part>
 	);
