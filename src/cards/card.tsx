@@ -12,6 +12,7 @@ export function Card(props: PropsWithChildren<CardProps>) {
 	const viewport = useViewport();
 	const camera = useCamera();
 	const [cameraCFrame, setCameraCFrame] = useBinding(camera.CFrame);
+	const [dragCFrame, setDragCFrame] = useBinding(new CFrame());
 
 	const distance = viewport.map((vp) => {
 		const aspectRatio = vp.X / vp.Y;
@@ -24,6 +25,8 @@ export function Card(props: PropsWithChildren<CardProps>) {
 
 	useEventListener(camera.GetPropertyChangedSignal("CFrame"), () => setCameraCFrame(camera.CFrame));
 
+	const finalCFrame = joinAnyBindings([cameraCFrame, distance]).map(([ccf, d]) => ccf.mul(new CFrame(0, 0, -d)));
+
 	return (
 		<part
 			Transparency={0}
@@ -32,8 +35,15 @@ export function Card(props: PropsWithChildren<CardProps>) {
 			CastShadow={false}
 			Size={PART_SIZE}
 			Locked
-			CFrame={joinAnyBindings([cameraCFrame, distance]).map(([ccf, d]) => ccf.mul(new CFrame(0, 0, -d)))}
+			CFrame={finalCFrame}
 		>
+			<dragdetector
+				DragStyle={"RotateAxis"}
+				Axis={finalCFrame.map((fcf) => fcf.UpVector)}
+				Change={{
+					DragFrame: (rbx) => setDragCFrame(rbx.DragFrame.Rotation),
+				}}
+			/>
 			<surfacegui MaxDistance={1000} Face={"Back"}>
 				<frame Size={new UDim2(1, 0, 1, 0)} BackgroundTransparency={0} ClipsDescendants>
 					{props["children"]}
