@@ -31,7 +31,7 @@ export function CardDisplay(props: CardProps) {
 
 	return (
 		<part
-			Transparency={0}
+			Transparency={1}
 			Anchored
 			CanCollide={false}
 			CastShadow={false}
@@ -46,10 +46,10 @@ export function CardDisplay(props: CardProps) {
 					DragFrame: (rbx) => setDragCFrame(rbx.DragFrame.Rotation),
 				}}
 			/>
-			<surfacegui MaxDistance={1000} Face={"Back"}>
+			<surfacegui MaxDistance={1000} Face={"Back"} SizingMode={"PixelsPerStud"} PixelsPerStud={100}>
 				<Empty>{props.frontFace}</Empty>
 			</surfacegui>
-			<surfacegui MaxDistance={1000} Face={"Front"}>
+			<surfacegui MaxDistance={1000} Face={"Front"} SizingMode={"PixelsPerStud"} PixelsPerStud={100}>
 				<Empty>{props.backFace}</Empty>
 			</surfacegui>
 		</part>
