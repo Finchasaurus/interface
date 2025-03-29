@@ -3,6 +3,7 @@ const size = {
 	half: { Horizontal: UDim2.fromScale(1, 0.5), all: UDim2.fromScale(0.5, 0.5), vertical: UDim2.fromScale(0.5, 1) },
 	none: { all: UDim2.fromScale(0.0, 0.0), X: UDim2.fromScale(0.0, 1.0), Y: UDim2.fromScale(1.0, 0.0) },
 	double: { Horizontal: UDim2.fromScale(2, 1), all: UDim2.fromScale(2, 2), vertical: UDim2.fromScale(1, 2) },
+	test: UDim2.fromOffset(100, 100),
 };
 
 const anchor = {

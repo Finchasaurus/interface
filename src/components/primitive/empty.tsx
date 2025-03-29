@@ -2,7 +2,7 @@ import React, { PropsWithChildren, Ref } from "@rbxts/react";
 import { NativePropsExcept } from "types/react";
 import { size } from "util/transform.util";
 
-interface EmptyProps {
+export interface EmptyProps {
 	debug?: boolean;
 	native?: NativePropsExcept<Frame, "BackgroundTransparency">;
 	ref?: Ref<Frame>;
