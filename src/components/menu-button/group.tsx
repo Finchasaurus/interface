@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "@rbxts/react";
 import { Empty } from "components/primitive/empty";
 import { transform } from "util/transform.util";
-import { Container } from "./container";
+import { Button } from "./button";
 
 interface MenuGroupProps {
 	groups: Array<string>;
@@ -19,7 +19,7 @@ export function MenuGroup(props: PropsWithChildren<MenuGroupProps>) {
 		>
 			<uilistlayout SortOrder={"LayoutOrder"} />
 			{props.groups.map((name, i) => (
-				<Container key={name} text={name} index={i} />
+				<Button key={name} text={name} index={i} />
 			))}
 		</Empty>
 	);

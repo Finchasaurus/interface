@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from "@rbxts/react";
+import { useMenu } from "hooks/state";
 import { usePx } from "hooks/use-px";
 import { transform } from "util/transform.util";
 import { Empty, EmptyProps } from "../primitive/empty";
@@ -11,11 +12,10 @@ interface ContainerProps {
 
 export function Container(props: PropsWithChildren<ContainerProps>) {
 	const px = usePx();
+	const menu = useMenu();
 
 	const font = Font.fromEnum(Enum.Font.Nunito);
 	font.Bold = true;
-
-	print(props.index);
 
 	return (
 		<Empty
