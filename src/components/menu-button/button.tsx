@@ -1,3 +1,4 @@
+import { lerp, useBindingListener, useMotion } from "@rbxts/pretty-react-hooks";
 import React, { PropsWithChildren } from "@rbxts/react";
 import { useMenu } from "hooks/state";
 import { usePx } from "hooks/use-px";
@@ -13,6 +14,8 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 	const px = usePx();
 	const menu = useMenu();
 
+	const [motion, motor] = useMotion(0);
+
 	const font = Font.fromEnum(Enum.Font.Nunito);
 	font.Bold = true;
 
@@ -22,6 +25,17 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 	const unselectedTextBorderColor = Color3.fromRGB(0, 0, 0);
 
 	const isSelected = menu.lastSelected === props.index;
+	const wasPreviouslySelected = menu.prevSelected === props.index;
+
+	const textSize = motion.map((v) => px(lerp(45, 64, v)));
+
+	useBindingListener(isSelected, (isSelected) => {
+		if (isSelected) {
+			motor.spring(1);
+		} else {
+			motor.spring(0);
+		}
+	});
 
 	return (
 		<textbutton
@@ -29,6 +43,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 			Size={new UDim2(0, px(500), 0, px(75))}
 			Event={{
 				MouseEnter: () => {
+					if (isSelected) return;
 					menuState.setLastSelected(props.index);
 				},
 			}}
@@ -37,7 +52,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 				Text={props.text.upper()}
 				BackgroundTransparency={isSelected ? 0 : 1}
 				Size={transform.size.fill}
-				TextSize={px(64)}
+				TextSize={textSize}
 				FontFace={font}
 				TextColor3={isSelected ? selectedTextColor : unselectedTextColor}
 				TextXAlignment={"Left"}
@@ -51,7 +66,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 				Text={props.text.upper()}
 				BackgroundTransparency={isSelected ? 0 : 1}
 				Size={transform.size.fill}
-				TextSize={px(64)}
+				TextSize={textSize}
 				FontFace={font}
 				TextXAlignment={"Left"}
 				TextColor3={unselectedTextBorderColor}
