@@ -31,6 +31,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 
 	useBindingListener(isSelected, (isSelected) => {
 		if (isSelected) {
+			motor.set(5);
 			motor.spring(1);
 		} else {
 			motor.spring(0);
@@ -51,6 +52,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 			<textlabel
 				Text={props.text.upper()}
 				BackgroundTransparency={isSelected ? 0 : 1}
+				BackgroundColor3={new Color3(1, 1, 1)}
 				Size={transform.size.fill}
 				TextSize={textSize}
 				FontFace={font}
@@ -59,7 +61,15 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 				ZIndex={2}
 			>
 				<uipadding PaddingLeft={new UDim(0, px(100 + 20 * props.index))} PaddingTop={new UDim(0, px(10))} />
-				{isSelected && <uistroke Thickness={px(3)} Color={selectedTextBorderColor} />}
+				{
+					<uistroke
+						Thickness={px(3)}
+						Color={selectedTextBorderColor}
+						Transparency={motion.map((v) => {
+							return 1 - v;
+						})}
+					/>
+				}
 			</textlabel>
 			{/* Text Dropshadow */}
 			<textlabel
