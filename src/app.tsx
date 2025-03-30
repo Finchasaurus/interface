@@ -1,4 +1,5 @@
 import React from "@rbxts/react";
+import { Background } from "components/background";
 import { MenuGroup } from "components/menu-button/group";
 import Layer from "components/primitive/layer";
 import ErrorHandler from "./components/error-handler/error-handler";
@@ -8,6 +9,7 @@ export function App() {
 		<ErrorHandler>
 			<Layer key="core">
 				<MenuGroup groups={["Play", "Settings", "Extras", "Credits"]} />
+				<Background />
 			</Layer>
 		</ErrorHandler>
 	);
