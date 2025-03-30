@@ -54,7 +54,13 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 				},
 			}}
 		>
-			<Empty>
+			<uipadding PaddingLeft={new UDim(0, px(100 + 20 * props.index))} PaddingTop={new UDim(0, px(10))} />
+			<Empty
+				native={{
+					Position: transform.position.left.center,
+					AnchorPoint: transform.anchor.left.center,
+				}}
+			>
 				<uiscale Scale={sizeMotion} />
 				<textlabel
 					BackgroundTransparency={1}
@@ -66,18 +72,14 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 					TextXAlignment={"Left"}
 					ZIndex={2}
 				>
-					<uipadding PaddingLeft={new UDim(0, px(100 + 20 * props.index))} PaddingTop={new UDim(0, px(10))} />
-					{
-						<uistroke
-							Thickness={px(3)}
-							Color={selectedTextBorderColor}
-							Transparency={motion.map((v) => {
-								return 1 - v;
-							})}
-						/>
-					}
+					<uistroke
+						Thickness={px(3)}
+						Color={selectedTextBorderColor}
+						Transparency={motion.map((v) => {
+							return 1 - v;
+						})}
+					/>
 				</textlabel>
-				{/* Text Dropshadow */}
 				<textlabel
 					Text={props.text.upper()}
 					BackgroundTransparency={1}
@@ -87,10 +89,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 					TextXAlignment={"Left"}
 					TextColor3={unselectedTextBorderColor}
 				>
-					<uipadding
-						PaddingLeft={new UDim(0, px(100 + 20 * props.index + 2))}
-						PaddingTop={new UDim(0, px(10 + 2))}
-					/>
+					<uipadding PaddingLeft={new UDim(0, px(2))} PaddingTop={new UDim(0, px(2))} />
 				</textlabel>
 			</Empty>
 		</textbutton>
