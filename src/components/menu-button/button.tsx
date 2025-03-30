@@ -1,5 +1,6 @@
 import { lerp, useBindingListener, useMotion } from "@rbxts/pretty-react-hooks";
 import React, { PropsWithChildren } from "@rbxts/react";
+import { Empty } from "components/primitive/empty";
 import { useMenu } from "hooks/state";
 import { usePx } from "hooks/use-px";
 import { menuState } from "state/menu.state";
@@ -15,6 +16,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 	const menu = useMenu();
 
 	const [motion, motor] = useMotion(0);
+	const [sizeMotion, sizeMotor] = useMotion(1);
 
 	const font = Font.fromEnum(Enum.Font.Nunito);
 	font.Bold = true;
@@ -31,8 +33,9 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 
 	useBindingListener(isSelected, (isSelected) => {
 		if (isSelected) {
-			motor.set(5);
+			sizeMotor.set(5);
 			motor.spring(1);
+			sizeMotor.spring(1);
 		} else {
 			motor.spring(0);
 		}
@@ -41,6 +44,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 	return (
 		<textbutton
 			Transparency={1}
+			BorderSizePixel={0}
 			Size={new UDim2(0, px(500), 0, px(75))}
 			Event={{
 				MouseEnter: () => {
@@ -49,43 +53,45 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 				},
 			}}
 		>
-			<textlabel
-				Text={props.text.upper()}
-				BackgroundTransparency={isSelected ? 0 : 1}
-				BackgroundColor3={new Color3(1, 1, 1)}
-				Size={transform.size.fill}
-				TextSize={textSize}
-				FontFace={font}
-				TextColor3={isSelected ? selectedTextColor : unselectedTextColor}
-				TextXAlignment={"Left"}
-				ZIndex={2}
-			>
-				<uipadding PaddingLeft={new UDim(0, px(100 + 20 * props.index))} PaddingTop={new UDim(0, px(10))} />
-				{
-					<uistroke
-						Thickness={px(3)}
-						Color={selectedTextBorderColor}
-						Transparency={motion.map((v) => {
-							return 1 - v;
-						})}
+			<Empty>
+				<uiscale Scale={sizeMotion} />
+				<textlabel
+					BackgroundTransparency={1}
+					Text={props.text.upper()}
+					Size={transform.size.fill}
+					TextSize={textSize}
+					FontFace={font}
+					TextColor3={isSelected ? selectedTextColor : unselectedTextColor}
+					TextXAlignment={"Left"}
+					ZIndex={2}
+				>
+					<uipadding PaddingLeft={new UDim(0, px(100 + 20 * props.index))} PaddingTop={new UDim(0, px(10))} />
+					{
+						<uistroke
+							Thickness={px(3)}
+							Color={selectedTextBorderColor}
+							Transparency={motion.map((v) => {
+								return 1 - v;
+							})}
+						/>
+					}
+				</textlabel>
+				{/* Text Dropshadow */}
+				<textlabel
+					Text={props.text.upper()}
+					BackgroundTransparency={1}
+					Size={transform.size.fill}
+					TextSize={textSize}
+					FontFace={font}
+					TextXAlignment={"Left"}
+					TextColor3={unselectedTextBorderColor}
+				>
+					<uipadding
+						PaddingLeft={new UDim(0, px(100 + 20 * props.index + 2))}
+						PaddingTop={new UDim(0, px(10 + 2))}
 					/>
-				}
-			</textlabel>
-			{/* Text Dropshadow */}
-			<textlabel
-				Text={props.text.upper()}
-				BackgroundTransparency={isSelected ? 0 : 1}
-				Size={transform.size.fill}
-				TextSize={textSize}
-				FontFace={font}
-				TextXAlignment={"Left"}
-				TextColor3={unselectedTextBorderColor}
-			>
-				<uipadding
-					PaddingLeft={new UDim(0, px(100 + 20 * props.index + 2))}
-					PaddingTop={new UDim(0, px(10 + 2))}
-				/>
-			</textlabel>
+				</textlabel>
+			</Empty>
 		</textbutton>
 	);
 }
