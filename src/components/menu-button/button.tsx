@@ -46,6 +46,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 			Transparency={1}
 			BorderSizePixel={0}
 			Size={new UDim2(0, px(500), 0, px(75))}
+			ClipsDescendants
 			Event={{
 				MouseEnter: () => {
 					if (isSelected) return;
