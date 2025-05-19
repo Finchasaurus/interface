@@ -45,7 +45,7 @@ export function Button(props: PropsWithChildren<ButtonProps>) {
 		<textbutton
 			Transparency={1}
 			BorderSizePixel={0}
-			Size={new UDim2(0, px(500), 0, px(75))}
+			Size={transform.size.fill}
 			ClipsDescendants
 			Event={{
 				MouseEnter: () => {
